@@ -12,6 +12,7 @@
 // @connect      127.0.0.1
 // @connect      localhost
 // @run-at       document-end
+// @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/blobs/83edf868611eb3022e3c607b9f73cc1c7bed80cd/main.js
 // ==/UserScript==
 
 (function () {
