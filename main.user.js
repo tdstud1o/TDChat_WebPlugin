@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TDChat Authorization and Letter Processing Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.6.1
+// @version      0.6.2
 // @description  A script to help with TDChat authorization and letter processing
 // @author       Timmoc
 // @match        *://*/*
@@ -279,8 +279,8 @@
                     GM_log("Response from getToken: " + response.responseText);
                     try {
                         const result = JSON.parse(response.responseText);
-                        if (result.token && result.isValid) {
-                            GM_setValue("token", result.token);
+                        if (result.code === 200 && result.data && result.data.isValid && result.data.token) {
+                            GM_setValue("token", result.data.token);
                             GM_log("Authorization successful! Token saved.");
                             const host = document.querySelector("#tdchat-floating-window");
                             if (host) host.remove();
