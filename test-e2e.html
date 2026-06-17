@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDChat WebPlugin E2E Test</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background: #f5f5f5; }
+        h1 { color: #333; }
+        h2 { color: #555; margin-top: 30px; border-bottom: 2px solid #4a90d9; padding-bottom: 5px; }
+        .test-case { background: #fff; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .test-case h3 { margin-top: 0; }
+        .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+        .tdl-container { background: #e8f5e9; border: 2px dashed #4caf50; border-radius: 6px; padding: 12px; margin: 8px 0; min-height: 30px; }
+        .tdl-container.error { background: #ffebee; border-color: #f44336; }
+        .expected { background: #fff3e0; border: 1px solid #ff9800; border-radius: 6px; padding: 12px; margin: 8px 0; font-size: 14px; }
+        .pass { color: #4caf50; font-weight: bold; }
+        .fail { color: #f44336; font-weight: bold; }
+        .status { padding: 4px 8px; border-radius: 4px; font-size: 12px; display: inline-block; margin-top: 8px; }
+        .status.pass { background: #e8f5e9; }
+        .status.fail { background: #ffebee; }
+    </style>
+</head>
+<body>
+    <h1>TDChat WebPlugin E2E Test Page</h1>
+    <p>Server: <code>http://127.0.0.1:12915</code> | User: Timmoc的Qoder | Token: auto-provisioned</p>
+
+    <h2>Test 1: Text Message Decryption</h2>
+    <div class="test-case">
+        <h3>Plain text letter decryption</h3>
+        <div class="label">Encrypted letter (SM2+AES hybrid):</div>
+        <div class="tdl-container" data-secret='{"type":"TDL","version":"0.0.3","toListBase64":"eyJhZGRyZXNzIjoicnNrM25hdmh2bjU2c3F5dGhqdGl1djc0Nm0iLCJrZXkiOiJCTmY4bkpaWDZNSG4yem5RQ2JxTzBvcVBCTUxSVU9uNndVT2MyUEZZZmx5d3IzOHRhZlBlS1ZIQkY0Q2s5L0tvcGduTWFKczJTckEwQ2pVd1dvZDZVU2YwOGEvVTVFVFJvbGVQd292a2VvTWxGb3BUSGR6T1krN1ZzbVRRMXJwaHpORjJTUEJ4ZEh6OVRrdlM4Zy9tV3B2NU9NVUQ4ZDBSaG5HdnNneGZ6b3cwS0pQUmtRY0xzQUE4YnM4cSJ9","messageChainBase64":"oQC0yJ52S/FqGdFx8U+bG1SrSwhDuT0grrKA71P91vPX0AQhobsiaGy0myXM0gDbad/ldKqlYKkz4tjyWfSC8rh40AnGMTyxpiAO0gM=","fromBase64":"","option":{"hashType":"SM3","encryptType":"AES"},"letter_hash":"QwVsRxHpCHD77Gouv2kqWg","sign":""}'>
+            [waiting for decryption...]
+        </div>
+        <div class="expected">Expected: <code>Hello TDChat E2E Test!</code></div>
+    </div>
+
+    <h2>Test 2: HTML Content as Text (XSS-safe)</h2>
+    <div class="test-case">
+        <h3>HTML content rendered as textContent (should NOT render HTML tags)</h3>
+        <div class="label">Letter with HTML in text field:</div>
+        <div class="tdl-container" data-secret='{"type":"TDL","version":"0.0.3","toListBase64":"eyJhZGRyZXNzIjoicnNrM25hdmh2bjU2c3F5dGhqdGl1djc0Nm0iLCJrZXkiOiJCRkNqa3A5WldxQUlLY3pmMlhHdmp3Ylp6WEdDam1JRUQ1allSMEF1V3YwRkNabzVjYjJWN0Y4Sm4zOWtkUTkxQm9nZGxQTWJCeERIbnJGQXpjU1RCRy9HRUdQY3FrelFKQUpQdDJXT3BQdVFxZDRSZnM4akduSUJtTDBISmtCdHN4MVBJeHlYQkZxN0wzdDJpaHE4S1JINDlFNzJ3d2pKbUE3WFRwaERHVWxpSUVsdlJBZkUvNWgyWDFuZSJ9","messageChainBase64":"L19CQi0j07Bb5sD6hZonD76j4ajcM61OKhnTQd221a6+uNMzdUeEjJSwACWZDKWxvuwZCppgilk5Jjlocwvp0GbIaLtGUmBinGDGsjp9yyrv1LM5vLpAKUoARpXPqXv86A9B7/rYSIAcvwQsr01Qm0L9fUaFqd/2osX++/OwRlw=","fromBase64":"","option":{"hashType":"SM3","encryptType":"AES"},"letter_hash":"Djebt0N77TXgd2Vhpe0UVw","sign":""}'>
+            [waiting for decryption...]
+        </div>
+        <div class="expected">Expected: HTML tags shown as plain text (not rendered), e.g. <code>&lt;h1&gt;HTML Content&lt;/h1&gt;...</code></div>
+    </div>
+
+    <h2>Test 3: Invalid Letter (Error Handling)</h2>
+    <div class="test-case">
+        <h3>Malformed encrypted letter</h3>
+        <div class="tdl-container" data-secret='{"type":"TDL","version":"0.0.3","toListBase64":"invalid","messageChainBase64":"invalid","fromBase64":"","option":{"hashType":"SM3","encryptType":"AES"},"letter_hash":"","sign":""}'>
+            [waiting for decryption...]
+        </div>
+        <div class="expected">Expected: Error logged in console, container stays with original text or shows error state</div>
+    </div>
+
+    <h2>Test 4: No TDL Container (Script Silent Exit)</h2>
+    <div class="test-case">
+        <h3>This area has no .tdl-container — script should not interfere</h3>
+        <p>If you can see this text normally, the script correctly skipped this section.</p>
+    </div>
+
+    <h2>Results</h2>
+    <div id="results" class="test-case">
+        <p>Check browser console (F12) for TDChat log messages.</p>
+        <p>After the script runs, visually verify:</p>
+        <ul>
+            <li>Test 1: Shows "Hello TDChat E2E Test!" in green container</li>
+            <li>Test 2: Shows HTML tags as plain text (NOT rendered as HTML)</li>
+            <li>Test 3: Stays with original text, error in console</li>
+            <li>Test 4: Normal text, no interference</li>
+        </ul>
+    </div>
+</body>
+</html>

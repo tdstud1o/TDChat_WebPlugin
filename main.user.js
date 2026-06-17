@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TDChat Authorization and Letter Processing Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.6.2
+// @version      0.6.3
 // @description  A script to help with TDChat authorization and letter processing
 // @author       Timmoc
 // @match        *://*/*
@@ -341,10 +341,10 @@
                         GM_log("Response from parseLetter: " + response.responseText);
                         try {
                             const result = JSON.parse(response.responseText);
-                            if (result.letter && result.letter.messageChain && result.letter.messageChain.length > 0) {
+                            if (result.code === 200 && result.data && result.data.letter && result.data.letter.messageChain && result.data.letter.messageChain.length > 0) {
                                 // 优先查找 rawHtml，其次 text
-                                const rawHtmlMsg = result.letter.messageChain.find(msg => msg.type === "poc_rawHtml");
-                                const textMsg = result.letter.messageChain.find(msg => msg.type === "text");
+                                const rawHtmlMsg = result.data.letter.messageChain.find(msg => msg.type === "poc_rawHtml");
+                                const textMsg = result.data.letter.messageChain.find(msg => msg.type === "text");
                                 const targetMsg = rawHtmlMsg || textMsg;
                                 if (targetMsg) {
                                     safeRender(container, targetMsg);
