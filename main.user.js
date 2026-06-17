@@ -13,8 +13,8 @@
 // @connect      localhost
 // @run-at       document-end
 // @require      https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js
-// @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.js
-// @downloadURL  https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.js
+// @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.user.js
+// @downloadURL  https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.user.js
 // ==/UserScript==
 
 (function () {
