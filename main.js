@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TDChat Authorization and Letter Processing Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.6.1
 // @description  A script to help with TDChat authorization and letter processing
 // @author       Timmoc
 // @match        *://*/*
@@ -13,7 +13,8 @@
 // @connect      localhost
 // @run-at       document-end
 // @require      https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js
-// @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/blobs/83edf868611eb3022e3c607b9f73cc1c7bed80cd/main.js
+// @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.js
+// @downloadURL  https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.js
 // ==/UserScript==
 
 (function () {
