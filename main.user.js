@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TDChat Authorization and Letter Processing Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.6.3
+// @version      0.6.4
 // @description  A script to help with TDChat authorization and letter processing
 // @author       Timmoc
 // @match        *://*/*
@@ -9,8 +9,7 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_log
-// @connect      127.0.0.1
-// @connect      localhost
+// @connect      *
 // @run-at       document-end
 // @require      https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js
 // @updateURL    https://raw.gitcode.com/Timmoc/TDChat_WebPlugin/raw/master/main.user.js
